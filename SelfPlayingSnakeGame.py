@@ -133,8 +133,8 @@ def drawGrid(w, rows, surface):
         x = x + sizeBetween
         y = y + sizeBetween
 
-        pygame.draw.line(surface, (25, 25, 25,), (x, 0), (x, w))
-        pygame.draw.line(surface, (25, 25, 25,), (0, y), (w, y))
+        pygame.draw.line(surface, (0, 0, 0), (x, 0), (x, w))
+        pygame.draw.line(surface, (0, 0, 0), (0, y), (w, y))
 
 
 def redrawWindow(surface):
