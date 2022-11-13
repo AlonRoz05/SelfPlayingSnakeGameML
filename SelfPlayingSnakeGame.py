@@ -2,6 +2,8 @@ import numpy as np
 import random
 import pygame
 import math
+import time
+import os
 
 
 class cube(object):
@@ -42,7 +44,7 @@ class snake(object):
     def move(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit
+                pygame.quit()
 
             keys = pygame.key.get_pressed()
 
@@ -117,11 +119,7 @@ class snake(object):
 
     def draw(self, surface):
         for i, c in enumerate(self.body):
-            if i == 0:
-                c.draw(surface)
-
-            else:
-                c.draw(surface)
+            c.draw(surface)
 
 
 def drawGrid(w, rows, surface):
@@ -146,9 +144,7 @@ def redrawWindow(surface):
     pygame.display.update()
 
 
-def randomSnack(item):
-    global rows
-
+def randomSnack(item, rows):
     positions = item.body
 
     while True:
@@ -171,7 +167,8 @@ def main():
     rows = 20
     win = pygame.display.set_mode((width, height))
     s = snake((255, 100, 100), (10, 10))
-    snack = cube(randomSnack(s), color=(100, 255, 100))
+    snack = cube(randomSnack(s, rows), color=(100, 255, 100))
+
     clock = pygame.time.Clock()
 
     while flag:
@@ -180,12 +177,13 @@ def main():
         s.move()
         if s.body[0].pos == snack.pos:
             s.addCube()
-            snack = cube(randomSnack(s), color=(100, 255, 100))
+            snack = cube(randomSnack(s, rows), color=(100, 255, 100))
 
         for x in range(len(s.body)):
             if s.body[x].pos in list(map(lambda z: z.pos, s.body[x+1:])):
-                print("score:" + len(s.body))
-                s.reset(10, 10)
+                print("Score: {}".format(str(len(s.body))))
+                s.reset((10, 10))
+                break
 
         redrawWindow(win)
 
