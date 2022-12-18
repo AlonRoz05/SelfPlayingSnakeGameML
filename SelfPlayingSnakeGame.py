@@ -39,11 +39,12 @@ class snake(object):
         self.head = cube(pos)
         self.body.append(self.head)
         self.score = 1
-        self.snakeIsAlive = True
         self.dirnx = 0
         self.dirny = 1
 
-    def move(self, isPlaying):
+    def move(self):
+        isPlaying = False
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -109,7 +110,6 @@ class snake(object):
         self.body = []
         self.body.append(self.head)
         self.score = 1
-        self.snakeIsAlive = True
         self.turns = {}
         self.dirnx = 0
         self.dirny = 1
@@ -154,11 +154,11 @@ def drawGrid(w, rows, surface):
 
 
 def redrawWindow(surface):
-    global rows, width, s, snack
+    global rows, s, snack
     surface.fill((0, 0, 0))
     s.draw(surface)
     snack.draw(surface)
-    drawGrid(width, rows, surface)
+    drawGrid(500, rows, surface)
     pygame.display.update()
 
 
@@ -176,7 +176,7 @@ def randomSnack(item, rows):
     return (x, y)
 
 
-def selfPlayingAI(snakePos, snakeBody, isSnakeAlive, snackPos):
+def selfPlayingAI(snakePos, snakeBody, snackPos):
     global currentMove
 
     cubesBeforeTheX = False
@@ -267,21 +267,18 @@ def selfPlayingAI(snakePos, snakeBody, isSnakeAlive, snackPos):
 
 
 def main():
-    global width, rows, s, snack, currentMove
+    global rows, s, snack, currentMove
 
     currentMove = ""
-    flag = True
-    width = 500
-    height = 500
     rows = 20
-    win = pygame.display.set_mode((width, height))
+    win = pygame.display.set_mode((500, 500))
 
     s = snake((255, 100, 100), (10, 10))
     snack = cube(randomSnack(s, rows), color=(100, 255, 100))
 
     clock = pygame.time.Clock()
 
-    while flag:
+    while True:
         pygame.time.delay(60)
         clock.tick(8)
 
@@ -295,8 +292,8 @@ def main():
                 s.reset((10, 10))
                 break
 
-        s.move(False)
-        selfPlayingAI(s.body[0].pos, s.body, s.snakeIsAlive, snack.pos)
+        s.move()
+        selfPlayingAI(s.body[0].pos, s.body, snack.pos)
         redrawWindow(win)
 
 
