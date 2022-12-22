@@ -1,9 +1,6 @@
 import numpy as np
 import random
 import pygame
-import math
-import time
-import os
 
 
 class cube(object):
@@ -179,91 +176,53 @@ def randomSnack(item, rows):
 def selfPlayingAI(snakePos, snakeBody, snackPos):
     global currentMove
 
-    cubesBeforeTheX = False
-    cubesInTheSameY = False
-
-    cubesInTheSameX = False
-    cubesBeforeTheY = False
-
     if snakePos[0] < snackPos[0] and currentMove != "Left":
         for cube in snakeBody:
             if snakePos[0] < cube.pos[0] and cube.pos[0] < snackPos[0]:
-                cubesBeforeTheX = True
-
                 if snakePos[1] == cube.pos[1] and snakePos[1] == snackPos[1]:
-                    cubesInTheSameY = True
+                    print("A")
                 else:
-                    cubesInTheSameY = False
                     s.moveRight()
                     currentMove = "Right"
-
             else:
-                cubesBeforeTheX = False
                 s.moveRight()
                 currentMove = "Right"
-
-            if cubesBeforeTheX and cubesInTheSameY:
-                print("A")
 
     elif snakePos[0] > snackPos[0] and currentMove != "Right":
         for cube in snakeBody:
             if snakePos[0] > cube.pos[0] and cube.pos[0] > snackPos[0]:
-                cubesBeforeTheX = True
-
                 if snakePos[1] == cube.pos[1] and snakePos[1] == snackPos[1]:
-                    cubesInTheSameY = True
+                    print("B")
                 else:
-                    cubesInTheSameY = False
                     s.moveLeft()
                     currentMove = "Left"
-
             else:
-                cubesBeforeTheX = False
                 s.moveLeft()
                 currentMove = "Left"
-
-            if cubesBeforeTheX and cubesInTheSameY:
-                print("B")
 
     elif snakePos[1] > snackPos[1] and currentMove != "Down":
         for cube in snakeBody:
             if snakePos[1] > cube.pos[1] and cube.pos[1] > snackPos[1]:
-                cubesBeforeTheY = True
-
                 if snakePos[0] == cube.pos[0] and snakePos[0] == snackPos[0]:
-                    cubesInTheSameX = True
+                    print("C")
                 else:
-                    cubesInTheSameX = False
                     s.moveUp()
                     currentMove = "Up"
-
             else:
-                cubesBeforeTheY = False
                 s.moveUp()
                 currentMove = "Up"
-
-            if cubesInTheSameX and cubesBeforeTheY:
-                print("C")
 
     elif snakePos[1] < snackPos[1] and currentMove != "Up":
         for cube in snakeBody:
             if snakePos[1] < cube.pos[1] and cube.pos[1] < snackPos[1]:
-                cubesBeforeTheY = True
-
                 if snakePos[0] == cube.pos[0] and snakePos[0] == snackPos[0]:
-                    cubesInTheSameX = True
+                    print("D")
                 else:
-                    cubesBeforeTheX = False
                     s.moveDown()
                     currentMove = "Down"
-
             else:
-                cubesBeforeTheY = False
                 s.moveDown()
                 currentMove = "Down"
-
-            if cubesInTheSameX and cubesBeforeTheY:
-                print("D")
 
 
 def main():
